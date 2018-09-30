@@ -1,0 +1,27 @@
+<section class="hero is-primary is-small">
+    <div class="hero-body"><div class="container"><h1 id="animationTitle" class="title">
+        MIT News Robotics
+    </h1> <h2 id="animationSub" class="subtitle">
+        Deep learning.
+    </h2></div></div>
+</section>
+<section>
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-10-fullhd is-12">
+                <div id="articles">
+                {{#each books}}
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-64x64">
+                                <img src={{this.imageUrl}}>
+                            </p>
+                        </figure>
+                    </article>
+                {{/each}}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

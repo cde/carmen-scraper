@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Scraping With Mongoose</title>
+    <style>
+      #articles {
+        display: inline-block;
+        overflow: auto;
+        width: 60%;
+        height: 700px;
+      }
+      #notes {
+        float: right;
+        width: 30%;
+      }
+      textarea, input {
+        display: block;
+        width: 100%;
+        background-color: #FCF5C7;
+      }
+      input {
+        height: 36px;
+        font-size: 24px;
+      }
+      textarea {
+        height: 200px;
+        font-size: 18px;
+      }
+    </style>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" type="text/css" />
+
+    <link rel='stylesheet' href='/stylesheets/main.css' />
+  </head>
+  <body>
+    <section class="hero is-primary is-small">
+      <div class="hero-body"><div class="container"><h1 id="animationTitle" class="title">
+        MIT News Robotics
+      </h1> <h2 id="animationSub" class="subtitle">
+        Deep learning.
+      </h2></div></div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-10-fullhd is-12">
+            <div id="articles">
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+      <div id="notes"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

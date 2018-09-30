@@ -5,12 +5,6 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 
-// // Our scraping tools
-// // Axios is a promised-based http library, similar to jQuery's Ajax method
-// // It works on the client and on the server
-// const axios = require("axios");
-// const cheerio = require("cheerio");
-
 // Require all models
 const db = require("./models");
 
@@ -37,11 +31,27 @@ app.set('view engine', 'handlebars');
 
 
 // Connect to the Mongo DB
+// Here we find an appropriate database to connect to, defaulting to
+// localhost if we don't find one.
+// var uristring =
+//   process.env.MONGOLAB_URI ||
+//   process.env.MONGOHQ_URL ||
+//   'mongodb://localhost/robotics';
+
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/robotics";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
-// Routes
+// Makes connection asynchronously.  Mongoose will queue up database
+// operations and release them when the connection is complete.
+// mongoose.connect(MONGODB_URI, { useNewUrlParser: true }, function (err, res) {
+//   if (err) {
+//     console.log ('ERROR connecting to: ' + MONGODB_URI + '. ' + err);
+//   } else {
+//     console.log ('Succeeded connected to: ' + MONGODB_URI + '. ' + res);
+//   }
+// });
 
+// Routes
 require("./routes/htmlRoutes")(app);
 
 // Start the server

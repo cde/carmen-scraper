@@ -13,12 +13,7 @@ module.exports = function(app) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       const $ = cheerio.load(response.data);
 
-      // console.log($("ul.view-news-items").find("li.views-row").text());
-
-      const news = [];
-      console.log( $("li.views-row").length);
       $("li.views-row").each(function (i, element) {
-        news[i] = $(this).text()
         const result = {};
         result.title = $(this)
           .find("h3 a")
@@ -32,49 +27,42 @@ module.exports = function(app) {
           .find("p.dek")
           .text()
 
-        result.imageUrl = "http://news.mit.edu/" + $(this)
+        result.imageUrl = $(this)
           .find("img")
           .attr("src")
 
         console.log(result);
-        // db.Article.update(_query_, _update_, { upsert: true });
-        //
 
-        db.Article.findOneAndUpdate(
-          {name: result.title},
-          {upsert: true, new: true, runValidators: true},
+        var query = { title: result.title},
+          options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-          function (err, dbArticle) { // callback
-            if (err) {
-              // handle error
-              return res.json(err);
-            } else {
-              // handle document
-              console.log(dbArticle);
-            }
-          }
-        )
+        db.Article.findOneAndUpdate(query, result, options, function(error, dbArticle) {
+          if (error){
+            console.log(error);
+            return
+          } ;
+          // do something with the document
+          console.log(dbArticle)
+        });
+
       });
-
-
       // If we were able to successfully scrape and save an Article, send a message to the client
       res.send("Scrape Complete");
-      console.log(news);
+      // res.render("Scrape Complete");
     });
 
   });
 
   app.get('/', function (req, res) {
-    db.Article.find({})
-      .then(function(dbArticle) {
-        // If we were able to successfully find Articles, send them back to the client
-        console.log(dbArticle);
+    db.Article.find({}).exec(function(err, dbArticle) {
+      if (!err) {
+        // handle result
         res.render('index', {articles: dbArticle, title: 'MIT Robotics'});
-      })
-      .catch(function(err) {
-        // If an error occurred, send it to the client
+      } else {
+        // error handling
         res.render(err);
-      });
+      };
+    });
   });
 
 // Route for getting all Articles from the db
